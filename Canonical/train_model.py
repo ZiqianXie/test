@@ -10,7 +10,6 @@ import keras.backend as kb
 import tensorflow as tf
 from spliceai import *
 from utils import *
-from multi_gpu import *
 from constants import * 
 
 assert int(sys.argv[1]) in [80, 400, 2000, 10000]
@@ -20,7 +19,7 @@ assert int(sys.argv[1]) in [80, 400, 2000, 10000]
 ###############################################################################
 
 L = 32
-N_GPUS = 2
+N_GPUS = 1
 
 if int(sys.argv[1]) == 80:
     W = np.asarray([11, 11, 11, 11])
@@ -54,7 +53,7 @@ print "\033[1mSequence length (output): %d\033[0m" % (SL)
 
 model = SpliceAI(L, W, AR)
 model.summary()
-model_m = make_parallel(model, N_GPUS)
+model_m = model
 model_m.compile(loss=categorical_crossentropy_2d, optimizer='adam')
 
 ###############################################################################

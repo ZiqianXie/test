@@ -8,7 +8,7 @@ SL=5000
 # SL will be the output length)
 
 splice_table='canonical_dataset.txt'
-ref_genome='/genomes/Homo_sapiens/UCSC/hg19/Sequence/WholeGenomeFasta/genome.fa'
+ref_genome='hg19.dup.fa'
 # Input details
 
 data_dir='./'
