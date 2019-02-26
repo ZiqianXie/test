@@ -66,6 +66,6 @@ for i in range(SEQ.shape[0]//CHUNK_SIZE):
 
 h5f2.close()
 
-print "--- %s seconds ---" % (time.time() - start_time)
+print ("--- %s seconds ---" % (time.time() - start_time))
 
 ###############################################################################         

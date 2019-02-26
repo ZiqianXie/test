@@ -73,7 +73,7 @@ for output_class in [1, 2]:
             Y_true[t].extend(Yc[t][is_expr, :, output_class].flatten())
             Y_pred[t].extend(Yps[t][is_expr, :, output_class].flatten())
 
-    print "\n\033[1m%s:\033[0m" % (output_class_labels[output_class])
+    print ("\n\033[1m%s:\033[0m" % (output_class_labels[output_class]))
 
     for t in range(1):
 
@@ -85,8 +85,8 @@ for output_class in [1, 2]:
 
 h5f.close()
 
-print "--- %s seconds ---" % (time.time() - start_time)
-print "--------------------------------------------------------------"
+print ("--- %s seconds ---" % (time.time() - start_time))
+print ("--------------------------------------------------------------")
 
 ###############################################################################
 
