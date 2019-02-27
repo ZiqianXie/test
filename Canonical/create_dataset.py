@@ -16,17 +16,61 @@ start_time = time.time()
 assert sys.argv[1] in ['train', 'test', 'all']
 assert sys.argv[2] in ['0', '1', 'all']
 
-h5f = h5py.File(data_dir + 'datafile'
-                + '_' + sys.argv[1] + '_' + sys.argv[2]
-                + '.h5', 'r')
+if sys.argv[1] == 'train':
+    CHROM_GROUP = ['chr11', 'chr13', 'chr15', 'chr17', 'chr19', 'chr21',
+                   'chr2', 'chr4', 'chr6', 'chr8', 'chr10', 'chr12',
+                   'chr14', 'chr16', 'chr18', 'chr20', 'chr22', 'chrX', 'chrY']
+elif sys.argv[1] == 'test':
+    CHROM_GROUP = ['chr1', 'chr3', 'chr5', 'chr7', 'chr9']
+else:
+    CHROM_GROUP = ['chr1', 'chr3', 'chr5', 'chr7', 'chr9',
+                   'chr11', 'chr13', 'chr15', 'chr17', 'chr19', 'chr21',
+                   'chr2', 'chr4', 'chr6', 'chr8', 'chr10', 'chr12',
+                   'chr14', 'chr16', 'chr18', 'chr20', 'chr22', 'chrX', 'chrY']
 
-SEQ = h5f['SEQ'][:]
-STRAND = h5f['STRAND'][:]
-TX_START = h5f['TX_START'][:]
-TX_END = h5f['TX_END'][:]
-JN_START = h5f['JN_START'][:]
-JN_END = h5f['JN_END'][:]
-h5f.close()
+###############################################################################
+
+NAME = []      # Gene symbol
+PARALOG = []   # 0 if no paralogs exist, 1 otherwise
+CHROM = []     # Chromosome number
+STRAND = []    # Strand in which the gene lies (+ or -)
+TX_START = []  # Position where transcription starts
+TX_END = []    # Position where transcription ends
+JN_START = []  # Positions where canonical exons end
+JN_END = []    # Positions where canonical exons start
+SEQ = []       # Nucleotide sequence
+
+fpr2 = open(sequence, 'r')
+
+with open(splice_table, 'r') as fpr1:
+    for line1 in fpr1:
+
+        line2 = fpr2.readline()
+
+        data1 = re.split('\n|\t', line1)[:-1]
+        data2 = re.split('\n|\t|:|-', line2)[:-1]
+
+        assert data1[2] == data2[0]
+        assert int(data1[4]) == int(data2[1])+CL_max//2+1
+        assert int(data1[5]) == int(data2[2])-CL_max//2
+
+        if (data1[2] not in CHROM_GROUP):
+            continue
+
+        if (sys.argv[2] != data1[1]) and (sys.argv[2] != 'all'):
+            continue
+
+        NAME.append(data1[0])
+        PARALOG.append(int(data1[1]))
+        CHROM.append(data1[2])
+        STRAND.append(data1[3])
+        TX_START.append(data1[4])
+        TX_END.append(data1[5])
+        JN_START.append(data1[6::2])
+        JN_END.append(data1[7::2])
+        SEQ.append(data2[3])
+
+fpr2.close()
 
 h5f2 = h5py.File(data_dir + 'dataset'
                 + '_' + sys.argv[1] + '_' + sys.argv[2]
@@ -34,11 +78,11 @@ h5f2 = h5py.File(data_dir + 'dataset'
 
 CHUNK_SIZE = 100
 
-for i in range(SEQ.shape[0]//CHUNK_SIZE):
+for i in range(len(SEQ)//CHUNK_SIZE):
     # Each dataset has CHUNK_SIZE genes
     
-    if (i+1) == SEQ.shape[0]//CHUNK_SIZE:
-        NEW_CHUNK_SIZE = CHUNK_SIZE + SEQ.shape[0]%CHUNK_SIZE
+    if (i+1) == len(SEQ)//CHUNK_SIZE:
+        NEW_CHUNK_SIZE = CHUNK_SIZE + len(SEQ)%CHUNK_SIZE
     else:
         NEW_CHUNK_SIZE = CHUNK_SIZE
 
