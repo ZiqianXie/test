@@ -52,7 +52,7 @@ def SpliceAI(L, W, AR):
             dense = Conv1D(L, 1)(conv)
             skip = add([skip, dense])
 
-    skip = Cropping1D(int(CL)/2)(skip)
+    skip = Cropping1D(int(CL/2))(skip)
 
     output0 = [[] for t in range(1)]
 
