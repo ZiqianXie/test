@@ -38,7 +38,7 @@ def SpliceAI(L, W, AR):
 
     assert len(W) == len(AR)
 
-    CL = 2 * np.sum(AR*(W-1))
+    CL = 2 * np.sum(np.array(AR)*(np.array(W)-1))
 
     input0 = Input(shape=(None, 4))
     conv = Conv1D(L, 1)(input0)
