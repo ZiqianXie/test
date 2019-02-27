@@ -50,12 +50,12 @@ def create_datapoints(seq, strand, tx_start, tx_end, jn_start, jn_end):
     tx_start = int(tx_start)
     tx_end = int(tx_end) 
 
-    jn_start = map(lambda x: map(int, re.split(',', x)[:-1]), jn_start)
-    jn_end = map(lambda x: map(int, re.split(',', x)[:-1]), jn_end)
+    jn_start = list(map(lambda x: list(map(int, re.split(',', x)[:-1])), jn_start))
+    jn_end = list(map(lambda x: list(map(int, re.split(',', x)[:-1])), jn_end))
 
     if strand == '+':
 
-        X0 = np.asarray(map(int, list(seq)))
+        X0 = np.asarray(list(map(int, list(seq))))
         Y0 = [-np.ones(tx_end-tx_start+1) for t in range(1)]
 
         for t in range(1):
@@ -72,7 +72,7 @@ def create_datapoints(seq, strand, tx_start, tx_end, jn_start, jn_end):
                      
     elif strand == '-':
 
-        X0 = (5-np.asarray(map(int, list(seq[::-1])))) % 5  # Reverse complement
+        X0 = (5-np.asarray(list(map(int, list(seq[::-1]))))) % 5  # Reverse complement
         Y0 = [-np.ones(tx_end-tx_start+1) for t in range(1)]
 
         for t in range(1):
