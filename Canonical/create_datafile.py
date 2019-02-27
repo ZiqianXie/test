@@ -81,15 +81,15 @@ h5f = h5py.File(data_dir + 'datafile'
                 + '_' + sys.argv[1] + '_' + sys.argv[2]
                 + '.h5', 'w')
 
-h5f.create_dataset('NAME', data=np.asarray(NAME))
+h5f.create_dataset('NAME', data=np.asarray(NAME).astype('S'))
 h5f.create_dataset('PARALOG', data=np.asarray(PARALOG))
-h5f.create_dataset('CHROM', data=np.asarray(CHROM))
-h5f.create_dataset('STRAND', data=np.asarray(STRAND))
-h5f.create_dataset('TX_START', data=np.asarray(TX_START))
-h5f.create_dataset('TX_END', data=np.asarray(TX_END))
-h5f.create_dataset('JN_START', data=np.asarray(JN_START))
-h5f.create_dataset('JN_END', data=np.asarray(JN_END))
-h5f.create_dataset('SEQ', data=np.asarray(SEQ)) 
+h5f.create_dataset('CHROM', data=np.asarray(CHROM).astype('S'))
+h5f.create_dataset('STRAND', data=np.asarray(STRAND).astype('S'))
+h5f.create_dataset('TX_START', data=np.asarray(TX_START).astype('S'))
+h5f.create_dataset('TX_END', data=np.asarray(TX_END).astype('S'))
+h5f.create_dataset('JN_START', data=np.asarray(JN_START).astype('S'))
+h5f.create_dataset('JN_END', data=np.asarray(JN_END).astype('S'))
+h5f.create_dataset('SEQ', data=np.asarray(SEQ).astype('S'))
 
 h5f.close()
 
