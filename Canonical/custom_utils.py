@@ -21,7 +21,6 @@ class Chromosome:
         self.download()
         self.chr_len()
         self.exon_prefetch(dataset)
-        self.file_id = 0
 
     def download(self):
         url = 'http://hgdownload.cse.ucsc.edu/goldenPath/hg19/' +\
@@ -96,11 +95,6 @@ class Chromosome:
                     self.exon_dict[ch].append((start, end-start))
         pkl.dump(self.exon_dict, open('exon_dict.pkl', 'wb'))
 
-    def save(self, file_handle, char_list, ch):
-        # append char list to file
-        s = '>{}\n'.format(ch)
-        file_handle.write(s+''.join(char_list)+'\n')
-
     def replace_exon(self):
         # replace exons with random gene segments to make this model predict
         # cryptic splicing.
@@ -115,7 +109,7 @@ class Chromosome:
                 seg_dict[orig_ch].append((orig_start, seg_len,
                                           cl[start: start+seg_len]))
         # second pass replaces the exons with random segments
-        with open('hg19.dup{}.fa'.format(self.file_id), 'a+') as f:
+        with open('hg19.dup{}.fa'.format(self.file_id), 'w') as f:
             for ch in reversed(self.chr_list):
                 # reverse the order of list so that the last loaded
                 # chromosome can be reused to save some time.
@@ -124,5 +118,5 @@ class Chromosome:
                 for start, seg_len, seg in seg_dict[ch]:
                     for i in range(seg_len):
                         cl[start+i] = seg[i]
-                self.save(f, cl, ch)
-        self.file_id = 1 - self.file_id
+                s = '>{}\n'.format(ch)
+                f.write(s+''.join(cl)+'\n')
