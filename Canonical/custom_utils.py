@@ -111,7 +111,7 @@ class Chromosome:
                 seg_dict[orig_ch].append((orig_start, seg_len,
                                           cl[start: start+seg_len]))
         # second pass replaces the exons with random segments
-        with open('hg19.dup{}.fa'.format(self.file_id), 'w') as f:
+        with open('hg19.dup.fa', 'w') as f:
             for ch in reversed(self.chr_list):
                 # reverse the order of list so that the last loaded
                 # chromosome can be reused to save some time.
