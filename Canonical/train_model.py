@@ -84,13 +84,14 @@ for model_idx in range(1, 6):
         except OSError:
             h5f = h5py.File(data_dir + 'train_all_{}.h5'.format(1-fid), 'r')
         callback()
-        for _ in range(len(idx_train)):
+        for j in range(len(idx_train)):
+            print('epoch progress: {:.2f}'.format(j/len(idx_train)))
             idx = np.random.choice(idx_train)
             X = h5f['X' + str(idx)][:]
             Y = h5f['Y' + str(idx)][:]
         
             Xc, Yc = clip_datapoints(X, Y, CL, N_GPUS) 
-            model_m.fit(Xc, Yc, batch_size=BATCH_SIZE, verbose=1)
+            model_m.fit(Xc, Yc, batch_size=BATCH_SIZE, verbose=0)
     
     
         
