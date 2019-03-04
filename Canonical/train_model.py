@@ -80,8 +80,7 @@ for model_idx in range(1, 6):
             h5f = h5py.File(data_dir + 'train_all_0.h5', 'r')
         except OSError:
             h5f = h5py.File(data_dir + 'train_all_1.h5', 'r')
-        if epoch_num > 0:
-            callback()
+        callback()
         for _ in range(len(idx_train)):
             idx = np.random.choice(idx_train)
             X = h5f['X' + str(idx)][:]
