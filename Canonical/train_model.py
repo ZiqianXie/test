@@ -71,6 +71,7 @@ idx_valid = idx_all[int(0.9*num_idx):]
 EPOCH_NUM = 10
 
 start_time = time.time()
+fid = 0
 
 for model_idx in range(1, 6):
     model_m = SpliceAI(L, W, AR)
@@ -78,9 +79,10 @@ for model_idx in range(1, 6):
     for epoch_num in range(EPOCH_NUM):
         print("model {} epoch {}".format(model_idx, epoch_num))
         try:
-            h5f = h5py.File(data_dir + 'train_all_0.h5', 'r')
+            h5f = h5py.File(data_dir + 'train_all_{}.h5'.format(fid), 'r')
+            fid = 1 - fid
         except OSError:
-            h5f = h5py.File(data_dir + 'train_all_1.h5', 'r')
+            h5f = h5py.File(data_dir + 'train_all_{}.h5'.format(1-fid), 'r')
         callback()
         for _ in range(len(idx_train)):
             idx = np.random.choice(idx_train)
