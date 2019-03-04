@@ -90,7 +90,7 @@ for model_idx in range(1, 6):
             Y = h5f['Y' + str(idx)][:]
         
             Xc, Yc = clip_datapoints(X, Y, CL, N_GPUS) 
-            model_m.fit(Xc, Yc, batch_size=BATCH_SIZE, verbose=0)
+            model_m.fit(Xc, Yc, batch_size=BATCH_SIZE, verbose=1)
     
     
         
