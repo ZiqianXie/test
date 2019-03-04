@@ -122,6 +122,7 @@ class Chromosome:
                         cl[start+i] = seg[i]
                 s = '>{}\n'.format(ch)
                 f.write(s+''.join(cl)+'\n')
+        os.system('./grab_sequence.sh')
         create_dataset('train', 'all')
 
 
