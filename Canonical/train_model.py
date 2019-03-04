@@ -76,6 +76,7 @@ for model_idx in range(1, 6):
     model_m = SpliceAI(L, W, AR)
     model_m.compile(loss=categorical_crossentropy_2d, optimizer='adam')
     for epoch_num in range(EPOCH_NUM):
+        print("model {} epoch {}".format(model_idx, epoch_num))
         try:
             h5f = h5py.File(data_dir + 'train_all_0.h5', 'r')
         except OSError:
