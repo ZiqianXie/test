@@ -169,8 +169,8 @@ def print_topl_statistics(y_true, y_pred):
 
     auprc = average_precision_score(y_true, y_pred)
 
-    print ("%.4f\t\033[91m%.4f\t\033[0m%.4f\t%.4f\t\033[94m%.4f\t\033[0m"
-          + "%.4f\t%.4f\t%.4f\t%.4f\t%d") % (
+    print ("%.4f\t\033[91m%.4f\t\033[0m%.4f\t%.4f\t\033[94m%.4f\t\033[0m\
+            %.4f\t%.4f\t%.4f\t%.4f\t%d" % (
           topkl_accuracy[0], topkl_accuracy[1], topkl_accuracy[2],
           topkl_accuracy[3], auprc, threshold[0], threshold[1],
-          threshold[2], threshold[3], len(idx_true))
+          threshold[2], threshold[3], len(idx_true)))
