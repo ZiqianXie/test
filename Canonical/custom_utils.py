@@ -4,6 +4,8 @@ import os
 import pickle as pkl
 from random import randint
 from collections import defaultdict
+from create_dataset import create_dataset
+from multiprocessing import Process
 
 
 # Due to memory limit (google colab now only has 12G Mem), the chromosomes are
@@ -120,3 +122,17 @@ class Chromosome:
                         cl[start+i] = seg[i]
                 s = '>{}\n'.format(ch)
                 f.write(s+''.join(cl)+'\n')
+        create_dataset('train', 'all')
+
+
+class Callback:
+    def __init__(self, chromosome):
+        self.c = chromosome
+        self.p = None
+
+    def __call__(self):
+        if self.p and self.p.is_alive():
+            pass
+        else:
+            self.p = Process(target=self.c.replace_exon)
+            self.p.start()

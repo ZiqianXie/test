@@ -10,7 +10,9 @@ import keras.backend as kb
 import tensorflow as tf
 from spliceai import *
 from utils import *
-from constants import * 
+from constants import *
+from custom_utils import Callback, Chromosome
+
 
 assert int(sys.argv[1]) in [80, 400, 2000, 10000]
 
@@ -50,6 +52,7 @@ CL = 2 * np.sum(AR*(W-1))
 assert CL <= CL_max and CL == int(sys.argv[1])
 print ("\033[1mContext nucleotides: %d\033[0m" % (CL))
 print ("\033[1mSequence length (output): %d\033[0m" % (SL))
+callback = Callback(Chromosome())
 
 model = SpliceAI(L, W, AR)
 model.summary()
@@ -59,9 +62,10 @@ model_m.compile(loss=categorical_crossentropy_2d, optimizer='adam')
 ###############################################################################
 # Training and validation
 ###############################################################################
-
-h5f = h5py.File(data_dir + 'dataset' + '_' + 'train'
-                + '_' + 'all' + '.h5', 'r')
+try:
+    h5f = h5py.File(data_dir + 'train_all_0.h5', 'r')
+except OSError:
+    h5f = h5py.File(data_dir + 'train_all_1.h5', 'r')
 
 num_idx = len(h5f.keys())//2
 idx_all = np.random.permutation(num_idx)
@@ -74,6 +78,8 @@ start_time = time.time()
 
 
 for epoch_num in range(EPOCH_NUM):
+    if epoch_num > 0 and epoch_num % len(idx_train) == 0:
+        callback()
 
     idx = np.random.choice(idx_train)
 
