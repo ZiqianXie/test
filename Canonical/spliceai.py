@@ -1,6 +1,8 @@
 ###############################################################################
 # This file has the functions necessary to create the SpliceAI model.
 ###############################################################################
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = '0'
 
 from keras.models import Model
 from keras.layers import Input
