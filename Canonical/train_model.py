@@ -47,7 +47,7 @@ elif int(sys.argv[1]) == 10000:
 # W: Convolution window size in each residual unit
 # AR: Atrous rate in each residual unit
 
-CL = 2 * np.sum(AR*(W-1))
+CL = 2 * int(np.sum(np.asarray(AR)*(np.asarray(W)-1)))
 assert CL <= CL_max and CL == int(sys.argv[1])
 print ("\033[1mContext nucleotides: %d\033[0m" % (CL))
 print ("\033[1mSequence length (output): %d\033[0m" % (SL))
