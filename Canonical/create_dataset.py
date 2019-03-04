@@ -81,6 +81,7 @@ def create_dataset(*argv):
     
     for i in range(len(SEQ)//CHUNK_SIZE):
         # Each dataset has CHUNK_SIZE genes
+        print(i/(len(SEQ)//CHUNK_SIZE))
         
         if (i+1) == len(SEQ)//CHUNK_SIZE:
             NEW_CHUNK_SIZE = CHUNK_SIZE + len(SEQ)%CHUNK_SIZE
