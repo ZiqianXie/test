@@ -178,7 +178,7 @@ for model_idx in range(1, 6):
     
         print ("--------------------------------------------------------------")
     
-        model.save('./Models/SpliceAI' + sys.argv[1]
+        model_m.save('./Models/SpliceAI' + sys.argv[1]
                    + '_c{}'.format(model_idx) + '.h5')
     
         if (epoch_num+1) >= 6*len(idx_train):
