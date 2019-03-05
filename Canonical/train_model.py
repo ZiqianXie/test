@@ -181,7 +181,7 @@ for model_idx in range(1, 6):
         model_m.save('./Models/SpliceAI' + sys.argv[1]
                    + '_c{}'.format(model_idx) + '.h5')
     
-        if (epoch_num+1) >= 6*len(idx_train):
+        if epoch_num > 4:
             kb.set_value(model_m.optimizer.lr,
                          0.5*kb.get_value(model_m.optimizer.lr))
                 # Learning rate decay
