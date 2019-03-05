@@ -83,6 +83,7 @@ for model_idx in range(1, 6):
             fid = 1 - fid
         except OSError:
             h5f = h5py.File(data_dir + 'train_all_{}.h5'.format(1-fid), 'r')
+        print("using {} h5 file for training".format(fid))
         callback()
         for j in range(len(idx_train)):
             print('epoch progress: {:.2f}'.format(j/len(idx_train)))

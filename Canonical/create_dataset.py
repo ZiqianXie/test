@@ -75,8 +75,10 @@ def create_dataset(*argv):
     
     try:
         h5f2 = h5py.File(data_dir+argv[0]+'_'+argv[1]+'_0.h5', 'w')
+        print("rewriting 0 h5 file")
     except OSError:
         h5f2 = h5py.File(data_dir+argv[0]+'_'+argv[1]+'_1.h5', 'w')
+        print("rewriting 1 h5 file")
     CHUNK_SIZE = 100
     
     for i in range(len(SEQ)//CHUNK_SIZE):
